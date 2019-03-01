@@ -4,6 +4,8 @@ from datetime import datetime
 
 import zeep
 
+from py_bcu.utils import BcuWsError
+
 
 def get_ultimo_cierre():
     """Retorna la fecha de ultimo cierre.
@@ -52,10 +54,13 @@ def get_cotizacion(fecha=None, moneda=2225, grupo=0):
     client = get_soap_client('awsbcucotizaciones')
     result = client.service.Execute(params)
 
-    return (
-        result.datoscotizaciones["datoscotizaciones.dato"][0]["TCC"],
-        result.datoscotizaciones["datoscotizaciones.dato"][0]["TCV"]
-    )
+    if result.respuestastatus.status == 1:
+        return (
+            result.datoscotizaciones["datoscotizaciones.dato"][0]["TCC"],
+            result.datoscotizaciones["datoscotizaciones.dato"][0]["TCV"]
+        )
+    else:
+        raise BcuWsError(result.respuestastatus.codigoerror, result.respuestastatus.mensaje)
 
 
 def get_monedas_valores(grupo=0):
@@ -91,5 +96,9 @@ if __name__ == '__main__':
     """Permite ejecutar las funciones desde la línea de comandos.
     Info: https://stackoverflow.com/a/52837375/2686243
     """
-    if len(sys.argv) > 1:
-        globals()[sys.argv[1]]()
+    if len(sys.argv) == 1:
+        print(get_ultimo_cierre())
+        print(get_cotizacion())
+        print(get_monedas_valores())
+    elif len(sys.argv) > 1:
+        print(globals()[sys.argv[1]]())

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='py_bcu',
-    version='0.1.1',
+    version='1.0.0',
     packages=['py_bcu'],
     package_dir={'': '.'},
     url='https://github.com/martinmanzo/py_bcu/',
