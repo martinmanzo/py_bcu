@@ -1,9 +1,0 @@
-README.rst
-setup.py
-./py_bcu/__init__.py
-./py_bcu/bcu_cotizacion.py
-py_bcu.egg-info/PKG-INFO
-py_bcu.egg-info/SOURCES.txt
-py_bcu.egg-info/dependency_links.txt
-py_bcu.egg-info/requires.txt
-py_bcu.egg-info/top_level.txt
