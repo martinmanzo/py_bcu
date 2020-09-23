@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='py_bcu',
-    version='1.0.0',
+    version='1.0.1',
     packages=['py_bcu'],
     package_dir={'': '.'},
     url='https://github.com/martinmanzo/py_bcu/',
@@ -11,6 +11,6 @@ setup(
     author_email='',
     description='Interact with the BCU\'s (Banco Central del Uruguay) webservices.',
     install_requires=[
-        'zeep==3.2.0'
+        'zeep==3.4.0'
     ]
 )
