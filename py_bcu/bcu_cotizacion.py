@@ -3,6 +3,7 @@ import sys
 from datetime import datetime
 
 import zeep
+from requests import Session
 
 from py_bcu.utils import BcuWsError
 
@@ -89,7 +90,14 @@ def get_soap_client(ws):
     :return: zeep.Client
     """
     wsdl = 'https://cotizaciones.bcu.gub.uy/wscotizaciones/servlet/{0}?wsdl'.format(ws)
-    return zeep.Client(wsdl=wsdl)
+
+    session = Session()
+    session.verify = 'bcu_cert.pem'
+    transport = zeep.transports.Transport(session=session)
+    client = zeep.Client(
+        wsdl=wsdl,
+        transport=transport)
+    return client
 
 
 if __name__ == '__main__':
