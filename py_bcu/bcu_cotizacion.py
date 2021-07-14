@@ -8,20 +8,20 @@ from requests import Session
 from py_bcu.utils import BcuWsError
 
 
-def get_ultimo_cierre():
+def get_ultimo_cierre(verify_session=False):
     """Retorna la fecha de ultimo cierre.
 
     Info: https://es.scribd.com/document/371380764/Especificacion-WS-Cotizaciones página 7.
 
     :return: datetime.date
     """
-    client = get_soap_client('awsultimocierre')
+    client = get_soap_client('awsultimocierre', verify_session)
     result = client.service.Execute()
 
     return result
 
 
-def get_cotizacion(fecha=None, moneda=2225, grupo=0):
+def get_cotizacion(fecha=None, moneda=2225, grupo=0, verify_session=False):
     """Retorna la cotización solicitada según los parámetros pasados.
     Por defecto se devuelve la cotización de DLS. USA BILLETE para la
     última fecha de cierre disponible y el grupo 0.
@@ -52,7 +52,7 @@ def get_cotizacion(fecha=None, moneda=2225, grupo=0):
         ]
     }
 
-    client = get_soap_client('awsbcucotizaciones')
+    client = get_soap_client('awsbcucotizaciones', verify_session)
     result = client.service.Execute(params)
 
     if result.respuestastatus.status == 1:
@@ -64,7 +64,7 @@ def get_cotizacion(fecha=None, moneda=2225, grupo=0):
         raise BcuWsError(result.respuestastatus.codigoerror, result.respuestastatus.mensaje)
 
 
-def get_monedas_valores(grupo=0):
+def get_monedas_valores(grupo=0, verify_session=False):
     """Retorna la lista de monedas y valores posible para un grupo dado.
 
     Info: https://es.scribd.com/document/371380764/Especificacion-WS-Cotizaciones página 6.
@@ -76,13 +76,13 @@ def get_monedas_valores(grupo=0):
         'Grupo': grupo,
     }
 
-    client = get_soap_client('awsbcumonedas')
+    client = get_soap_client('awsbcumonedas', verify_session)
     result = client.service.Execute(params)
 
     return result
 
 
-def get_soap_client(ws):
+def get_soap_client(ws, verify_session=False):
     """ Retonra el cliente SOAP para el wedservice pasado por parámetro.
     Webservices disponibles: https://es.scribd.com/document/371380764/Especificacion-WS-Cotizaciones
 
@@ -92,7 +92,8 @@ def get_soap_client(ws):
     wsdl = 'https://cotizaciones.bcu.gub.uy/wscotizaciones/servlet/{0}?wsdl'.format(ws)
 
     session = Session()
-    session.verify = 'bcu_cert.pem'
+    if verify_session:
+        session.verify = 'bcu_cert.pem'
     transport = zeep.transports.Transport(session=session)
     client = zeep.Client(
         wsdl=wsdl,

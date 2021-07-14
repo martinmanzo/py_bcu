@@ -51,6 +51,11 @@ Uso en tu proyecto
 Lo parámetros y el tipo de retorno de cada método están documentados en
 el código.
 
+En algunos casos puede ser necesario validar la sesion frente al BCU. Para
+esos casos se agregó el parámetro `verify_session` a los métodos
+`get_ultimo_cierre`, `get_cotizacion` y `get_monedas_valores`. `verify_session`
+es un booleano que por defecto toma el valor de `False`.
+
 Por hacer
 ---------
 
