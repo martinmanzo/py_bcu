@@ -51,29 +51,17 @@ Uso en tu proyecto
 Lo parámetros y el tipo de retorno de cada método están documentados en
 el código.
 
-En algunos casos puede ser necesario validar la sesion frente al BCU. Para
-esos casos se agregó el parámetro `verify_session` a los métodos
-`get_ultimo_cierre`, `get_cotizacion` y `get_monedas_valores`. `verify_session`
-es un booleano que por defecto toma el valor de `False`.
-
-Por hacer
----------
-
--  Tests
--  Implementar otros WebServices públicos provistos por el BCU.
--  Mejorar la documentación con más ejemplos.
-
-Se aceptan PRs.
+**Se aceptan PRs.**
 
 Agradecimientos
 ---------------
 
-- `Bller.uy`_ - Buscando información sobre los WebServices del BCU me crucé con `su librería para PHP`_ y la tome como base para hacer lo propio en Python.
+- `Biller.uy`_ - Buscando información sobre los WebServices del BCU me crucé con `su librería para PHP`_ y la tome como base para hacer lo propio en Python.
 
 - `How to Publish Your Package on PyPI`_
 
 
 .. _publicado en PyPi: https://pypi.org/project/py-bcu/
-.. _Bller.uy: https://biller.uy/
+.. _Biller.uy: https://biller.uy/
 .. _su librería para PHP: https://github.com/biller/bcu
 .. _How to Publish Your Package on PyPI: https://blog.jetbrains.com/pycharm/2017/05/how-to-publish-your-package-on-pypi/
